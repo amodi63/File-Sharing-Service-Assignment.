@@ -56,7 +56,9 @@ class FileController extends Controller
             return response()->json(['message' => 'This File Is Not Found!', 'status' => false]);
         }
 
-        $path =  $file->path;
+
+        $path = url()->route('files.download', ['file' => basename($file->path)]);
+
         $data = [
             'file_link' => $path,
             'downloadRoute' => route('files.download', $file->id),
@@ -64,8 +66,14 @@ class FileController extends Controller
         ];
         return response()->json($data);
     }
-    public function downloadFile(File $file)
+    public function downloadFile($file)
     {
+
+        $file_path = "files/$file";
+        $file = File::where('path',  $file_path)->first();
+        if (!$file) {
+            return response()->json(['error' => 'File not found'], 404);
+        }
         if ($file->isLinkExpired()) {
 
             abort(404, 'This File Is Not Found!');
@@ -78,37 +86,5 @@ class FileController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to download the file.'], 500);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

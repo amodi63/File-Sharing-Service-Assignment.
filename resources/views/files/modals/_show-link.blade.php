@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-secondary" id="dawnloadFileURl" > Dawnload</a>
+              
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
                         class="fa-solid fa-xmark"></i>Close</button>
             </div>
