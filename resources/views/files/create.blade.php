@@ -13,7 +13,7 @@
     <section style="padding-top:60px;">
         <div class="container">
             <div class="mb-3 text-end">
-                <a href="{{ route('files.index') }}" class="btn btn-primary">ALl Files</a>
+                <a href="{{ route('files.index') }}" class="btn btn-primary">ALL Uploded Files</a>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-12">
