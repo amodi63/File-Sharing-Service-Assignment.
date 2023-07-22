@@ -17,7 +17,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-              
+                <button type="button" class="btn btn-primary" id="copyLinkBtn">Copy Link</button>
+
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
                         class="fa-solid fa-xmark"></i>Close</button>
             </div>

@@ -35,7 +35,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $file->name }}</td>
-                                <td class="text-center">{{ $file->size . ' B' }}</td>
+                                <td class="text-center">{{ $file->size_in_megabytes }}</td>
                                 <td class="text-center">{{ $file->download_count }}</td>
                                 <td class="text-center">
                                     @if ($file->isLinkExpired())
@@ -44,7 +44,8 @@
                                         {{ $file->getExpirationDate() }}
                                 </td>
                         @endif
-                        <td class="text-center showLinkBtn"><a href="{{ route('files.getLink', $file->id) }}">Get Link</a></td>
+                        <td class="text-center showLinkBtn"><a class="btn btn-primary"
+                                href="{{ route('files.getLink', $file->id) }}">Get Link</a></td>
                         </tr>
                     @empty
                         <tr>
@@ -68,35 +69,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
         integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous">
     </script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </body>
 
 </html>
 
 <script>
-  $(function() {
-      $('.showLinkBtn').click(function(e) {
-        e.preventDefault()
-          var _url  = $(this).find('a').attr('href');
-    
-          $.ajax({
-              url: _url,
-              type: 'GET',
-              success: function(data) {
-              
-                if(data.status){
+    $(function() {
+        $('.showLinkBtn').click(function(e) {
+            e.preventDefault()
+            var _url = $(this).find('a').attr('href');
 
-                  var fileLink = data.file_link;
-                  $('#link-File').val(fileLink);
-                  $('#dawnloadFileURl').attr('href', data.downloadRoute);
-                  $('#fileModal').modal('show');
+            $.ajax({
+                url: _url,
+                type: 'GET',
+                success: function(data) {
+
+                    if (data.status) {
+
+                        var fileLink = data.file_link;
+                        $('#link-File').val(fileLink);
+                        $('#dawnloadFileURl').attr('href', data.downloadRoute);
+                        $('#fileModal').modal('show');
+                    }
+                },
+                error: function() {
+                    alert('Failed to fetch file link.');
                 }
-              },
-              error: function() {
-                  alert('Failed to fetch file link.');
-              }
-          });
-      });
-  });
-</script>
+            });
+        });
 
+        function copyLinkToClipboard() {
+            const linkInput = document.getElementById('link-File');
+            linkInput.select();
+            document.execCommand('copy');
+            const copyLinkBtn = document.getElementById('copyLinkBtn');
+            copyLinkBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyLinkBtn.textContent = 'Copy Link';
+            }, 2000);
+        }
+        document.getElementById('copyLinkBtn').addEventListener('click', copyLinkToClipboard);
+    });
+</script>
