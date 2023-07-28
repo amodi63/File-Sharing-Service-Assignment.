@@ -19,6 +19,8 @@ use App\Http\Controllers\FileController;
 
 Route::get('/', [FileController::class, 'create'])->name('files.create');
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
-Route::post('files/upload', [FileController::class, 'store'])->name('files.upload');
+Route::post('files/upload', [FileController::class, 'upload'])->name('files.upload');
+Route::post('files/store', [FileController::class, 'store'])->name('files.store');
 Route::get('/files/{file}/get-link',  [FileController::class, 'getFileLink'])->name('files.getLink');
-Route::get('/{file}', [FileController::class, 'downloadFile'])->name('files.download');
+Route::get('/{filename}', [FileController::class, 'downloadZip'])->name('files.download');
+

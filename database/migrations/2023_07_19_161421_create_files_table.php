@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('path');
-            $table->unsignedBigInteger('size');
             $table->unsignedBigInteger('download_count')->default(0);
             $table->timestamps();
         });
